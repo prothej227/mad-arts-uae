@@ -44,12 +44,12 @@
       </TransitionGroup>
 
       <div class="portfolio__footer">
-        <a href="#contact" class="portfolio__cta">
+        <RouterLink :to="{ name: 'contact' }" class="portfolio__cta">
           Start a Project
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
           </svg>
-        </a>
+        </RouterLink>
       </div>
     </div>
   </section>
@@ -57,6 +57,7 @@
 
 <script setup>
 import { ref, computed } from 'vue'
+import { RouterLink } from 'vue-router'
 
 const categories = ['All', 'Theme Parks', 'Sculpture', 'Scenic Art', 'Retail']
 const activeFilter = ref('All')

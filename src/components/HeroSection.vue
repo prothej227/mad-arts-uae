@@ -25,8 +25,8 @@
         </p>
 
         <div class="hero__actions">
-          <a href="#portfolio" class="hero__btn hero__btn--primary">Explore Our Work</a>
-          <a href="#about" class="hero__btn hero__btn--ghost">Our Story</a>
+          <RouterLink :to="{ name: 'portfolio' }" class="hero__btn hero__btn--primary">Explore Our Work</RouterLink>
+          <RouterLink :to="{ name: 'about' }" class="hero__btn hero__btn--ghost">Our Story</RouterLink>
         </div>
 
         <div class="hero__stats">
@@ -65,6 +65,8 @@
 </template>
 
 <script setup>
+import { RouterLink } from 'vue-router'
+
 const stats = [
   { value: '15+', label: 'Years of Craft' },
   { value: '200+', label: 'Themed Worlds Built' },

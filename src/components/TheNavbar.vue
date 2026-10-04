@@ -1,24 +1,21 @@
 <template>
   <header class="navbar" :class="{ scrolled: isScrolled }">
     <div class="container navbar__inner">
-      <!-- Logo -->
-      <a href="#" class="navbar__logo" aria-label="MAD Arts home">
+      <RouterLink :to="{ name: 'home' }" class="navbar__logo" aria-label="MAD Arts home">
         <img src="/src/assets/logo.avif" alt="MAD Arts" class="navbar__logo-img" />
-      </a>
+      </RouterLink>
 
-      <!-- Desktop Nav -->
       <nav class="navbar__links" aria-label="Main navigation">
-        <a
+        <RouterLink
           v-for="item in navItems"
-          :key="item.href"
-          :href="item.href"
+          :key="item.name"
+          :to="{ name: item.name }"
           class="navbar__link"
-        >{{ item.label }}</a>
+          active-class="navbar__link--active"
+        >{{ item.label }}</RouterLink>
       </nav>
 
-      <!-- Right controls -->
       <div class="navbar__controls">
-        <!-- Theme toggle -->
         <button
           class="navbar__theme-btn"
           @click="$emit('toggle-theme')"
@@ -39,10 +36,8 @@
           </span>
         </button>
 
-        <!-- CTA -->
-        <a href="#contact" class="navbar__cta">Get in Touch</a>
+        <RouterLink :to="{ name: 'contact' }" class="navbar__cta">Get in Touch</RouterLink>
 
-        <!-- Hamburger -->
         <button
           class="navbar__hamburger"
           @click="mobileOpen = !mobileOpen"
@@ -56,17 +51,21 @@
       </div>
     </div>
 
-    <!-- Mobile menu -->
     <div class="navbar__mobile" :class="{ active: mobileOpen }">
       <nav>
-        <a
+        <RouterLink
           v-for="item in navItems"
-          :key="item.href"
-          :href="item.href"
+          :key="item.name"
+          :to="{ name: item.name }"
           class="navbar__mobile-link"
+          active-class="navbar__mobile-link--active"
           @click="mobileOpen = false"
-        >{{ item.label }}</a>
-        <a href="#contact" class="navbar__mobile-cta" @click="mobileOpen = false">Get in Touch</a>
+        >{{ item.label }}</RouterLink>
+        <RouterLink
+          :to="{ name: 'contact' }"
+          class="navbar__mobile-cta"
+          @click="mobileOpen = false"
+        >Get in Touch</RouterLink>
       </nav>
     </div>
   </header>
@@ -74,6 +73,7 @@
 
 <script setup>
 import { ref, onMounted, onUnmounted } from 'vue'
+import { RouterLink } from 'vue-router'
 
 defineProps({
   isDark: { type: Boolean, default: true },
@@ -84,11 +84,11 @@ const isScrolled = ref(false)
 const mobileOpen = ref(false)
 
 const navItems = [
-  { label: 'About', href: '#about' },
-  { label: 'Services', href: '#services' },
-  { label: 'Work', href: '#portfolio' },
-  { label: 'Team', href: '#team' },
-  { label: 'Contact', href: '#contact' },
+  { label: 'About', name: 'about' },
+  { label: 'Services', name: 'services' },
+  { label: 'Work', name: 'portfolio' },
+  { label: 'Team', name: 'team' },
+  { label: 'Contact', name: 'contact' },
 ]
 
 function onScroll() {
@@ -163,11 +163,13 @@ onUnmounted(() => window.removeEventListener('scroll', onScroll))
   transition: width 0.25s ease;
 }
 
-.navbar__link:hover {
+.navbar__link:hover,
+.navbar__link--active {
   color: var(--text);
 }
 
-.navbar__link:hover::after {
+.navbar__link:hover::after,
+.navbar__link--active::after {
   width: 100%;
 }
 

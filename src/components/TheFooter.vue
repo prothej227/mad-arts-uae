@@ -3,12 +3,12 @@
     <div class="footer__top">
       <div class="container footer__top-inner">
         <div class="footer__brand">
-          <a href="#" class="footer__logo-link" aria-label="MAD Arts">
+          <RouterLink :to="{ name: 'home' }" class="footer__logo-link" aria-label="MAD Arts">
             <img src="/src/assets/logo.avif" alt="MAD Arts" class="footer__logo" />
-          </a>
+          </RouterLink>
           <p class="footer__tagline">
             Making art that moves people.<br />
-            Dubai, UAE — Global reach.
+            Abu Dhabi, UAE — Global reach.
           </p>
         </div>
 
@@ -16,7 +16,18 @@
           <h4 class="footer__nav-heading">{{ group.heading }}</h4>
           <ul class="footer__nav-list">
             <li v-for="item in group.links" :key="item.label">
-              <a :href="item.href" class="footer__nav-link">{{ item.label }}</a>
+              <RouterLink
+                v-if="item.route"
+                :to="{ name: item.route }"
+                class="footer__nav-link"
+              >{{ item.label }}</RouterLink>
+              <a
+                v-else
+                :href="item.href"
+                class="footer__nav-link"
+                :target="item.external ? '_blank' : undefined"
+                :rel="item.external ? 'noopener noreferrer' : undefined"
+              >{{ item.label }}</a>
             </li>
           </ul>
         </div>
@@ -37,26 +48,28 @@
 </template>
 
 <script setup>
+import { RouterLink } from 'vue-router'
+
 const currentYear = new Date().getFullYear()
 
 const footerNav = [
   {
     heading: 'Services',
     links: [
-      { label: 'Themed Environments', href: '#services' },
-      { label: 'Sculpture & Fabrication', href: '#services' },
-      { label: 'Scenic Painting', href: '#services' },
-      { label: 'Theme Park Theming', href: '#services' },
-      { label: 'Decorative Works', href: '#services' },
+      { label: 'Themed Environments', route: 'services' },
+      { label: 'Sculpture & Fabrication', route: 'services' },
+      { label: 'Scenic Painting', route: 'services' },
+      { label: 'Theme Park Theming', route: 'services' },
+      { label: 'Decorative Works', route: 'services' },
     ],
   },
   {
     heading: 'Company',
     links: [
-      { label: 'About MAD Arts', href: '#about' },
-      { label: 'Our Projects', href: '#portfolio' },
-      { label: 'Our Team', href: '#team' },
-      { label: 'Careers', href: '#contact' },
+      { label: 'About MAD Arts', route: 'about' },
+      { label: 'Our Projects', route: 'portfolio' },
+      { label: 'Our Team', route: 'team' },
+      { label: 'Careers', route: 'contact' },
     ],
   },
   {
@@ -64,9 +77,9 @@ const footerNav = [
     links: [
       { label: 'hello@madarts.ae', href: 'mailto:hello@madarts.ae' },
       { label: '+971 4 200 0000', href: 'tel:+97142000000' },
-      { label: 'Musaffah, Abu Dhabi, UAE', href: '#contact' },
-      { label: 'Instagram', href: 'https://instagram.com/madarts.ae' },
-      { label: 'LinkedIn', href: 'https://linkedin.com/company/mad-arts' },
+      { label: 'Musaffah, Abu Dhabi, UAE', route: 'contact' },
+      { label: 'Instagram', href: 'https://instagram.com/madarts.ae', external: true },
+      { label: 'LinkedIn', href: 'https://linkedin.com/company/mad-arts', external: true },
     ],
   },
 ]
